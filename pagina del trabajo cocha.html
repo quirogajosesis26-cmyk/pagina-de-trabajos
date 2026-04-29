@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>WorkHub — Conecta talento con oportunidades</title>
+<style>
+:root{
+  --bg:#080c12;--bg2:#0e1420;--bg3:#141c2a;
+  --accent:#00d4ff;--accent2:#7c3aed;
+  --text:#f0f4ff;--muted:#8b9cb3;
+  --card:#111827;--border:#1e2d42;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;position:sticky;top:0;z-index:100;background:rgba(8,12,18,0.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;font-size:.9rem;color:var(--muted)}
+.nav-links a:hover{color:var(--text);transition:color .2s}
+.nav-cta{display:flex;gap:.8rem;align-items:center}
+.btn-ghost{padding:.55rem 1.2rem;border:1px solid var(--border);border-radius:8px;font-size:.85rem;cursor:pointer;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-primary{padding:.55rem 1.4rem;border:none;border-radius:8px;font-size:.85rem;cursor:pointer;background:var(--accent);color:#000;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .2s}
+.btn-primary:hover{opacity:.85;transform:translateY(-1px)}
+
+.hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,212,255,.13) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hero::after{content:'';position:absolute;bottom:-80px;left:15%;width:500px;height:500px;background:radial-gradient(circle,rgba(124,58,237,.1) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hero>div{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border:1px solid rgba(0,212,255,.3);border-radius:50px;font-size:.78rem;color:var(--accent);margin-bottom:1.8rem;background:rgba(0,212,255,.06)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;display:inline-block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-0.04em;margin-bottom:1.5rem}
+h1 .hl{color:var(--accent)}
+.hero-sub{font-size:1.1rem;color:var(--muted);max-width:520px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-lg{padding:.85rem 2rem;border-radius:10px;font-size:1rem;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all .25s}
+.btn-lg-primary{background:var(--accent);color:#000;border:none}
+.btn-lg-primary:hover{opacity:.85;transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,212,255,.25)}
+.btn-lg-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-lg-outline:hover{border-color:var(--muted)}
+.hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:4rem;padding-top:3rem;border-top:1px solid var(--border);flex-wrap:wrap}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700}
+.stat-label{font-size:.82rem;color:var(--muted);margin-top:.2rem}
+
+section{padding:6rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-tag{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;font-weight:500}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem}
+.section-sub{color:var(--muted);max-width:500px;line-height:1.7;font-size:.95rem}
+
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:3rem}
+.service-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:.35s}
+.service-card:hover{border-color:rgba(0,212,255,.3);transform:translateY(-5px)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-icon{width:44px;height:44px;border-radius:10px;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;font-size:1.3rem}
+.service-card h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:.6rem}
+.service-card p{font-size:.86rem;color:var(--muted);line-height:1.6}
+.service-price{margin-top:1.2rem;font-size:.85rem;color:var(--accent);font-weight:500}
+
+.jobs-section{background:var(--bg2)}
+.jobs-filter{display:flex;gap:.6rem;margin:2rem 0;flex-wrap:wrap}
+.filter-btn{padding:.45rem 1rem;border:1px solid var(--border);border-radius:50px;font-size:.8rem;cursor:pointer;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s}
+.filter-btn.active,.filter-btn:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+.jobs-grid{display:grid;gap:1rem}
+.job-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;transition:all .25s;cursor:pointer}
+.job-card:hover{border-color:rgba(0,212,255,.3);transform:translateX(4px)}
+.job-left{display:flex;gap:1rem;align-items:center}
+.job-logo{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;flex-shrink:0}
+.job-info h4{font-size:.95rem;font-weight:500;margin-bottom:.3rem}
+.job-meta{display:flex;gap:.7rem;font-size:.78rem;color:var(--muted);flex-wrap:wrap;align-items:center}
+.job-tag{padding:.2rem .65rem;border-radius:50px;font-size:.72rem;font-weight:500}
+.job-tag.remote{background:rgba(0,212,255,.1);color:var(--accent)}
+.job-tag.onsite{background:rgba(124,58,237,.12);color:#a78bfa}
+.job-tag.hybrid{background:rgba(16,185,129,.1);color:#34d399}
+.job-salary{font-size:.95rem;font-weight:600;color:var(--text);text-align:right;flex-shrink:0}
+.job-salary span{display:block;font-size:.72rem;color:var(--muted);font-weight:400}
+
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3rem}
+.step-card{text-align:center;padding:2rem 1.5rem}
+.step-num{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:rgba(0,212,255,.15);line-height:1;margin-bottom:1rem}
+.step-card h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:.6rem}
+.step-card p{font-size:.85rem;color:var(--muted);line-height:1.6}
+
+.auth-section{background:var(--bg3)}
+.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+@media(max-width:720px){.auth-grid{grid-template-columns:1fr}.nav-links{display:none}}
+.auth-form{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem}
+.auth-form h3{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:.4rem}
+.auth-form .form-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.8rem}
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+.form-group input{width:100%;padding:.75rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border .2s}
+.form-group input:focus{border-color:var(--accent)}
+.form-group input::placeholder{color:rgba(139,156,179,.4)}
+.btn-google{width:100%;padding:.75rem;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.7rem;margin-bottom:1.2rem;transition:all .2s}
+.btn-google:hover{border-color:var(--muted);background:rgba(255,255,255,.03)}
+.google-icon{width:20px;height:20px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#4285F4;flex-shrink:0}
+.divider{display:flex;align-items:center;gap:1rem;margin:1rem 0;color:var(--muted);font-size:.78rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-submit{width:100%;padding:.82rem;background:var(--accent);color:#000;border:none;border-radius:8px;font-size:.95rem;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:.8rem;transition:all .2s}
+.auth-submit:hover{opacity:.85}
+
+.pricing-section{background:var(--bg2)}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:3rem}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2rem;transition:all .3s}
+.price-card.featured{border-color:rgba(0,212,255,.5);position:relative}
+.popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-size:.72rem;font-weight:600;padding:.3rem 1rem;border-radius:50px;white-space:nowrap}
+.price-plan{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.8rem}
+.price-amount{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:700;letter-spacing:-0.03em}
+.price-amount span{font-size:1rem;color:var(--muted);font-weight:400}
+.price-features{list-style:none;margin:1.5rem 0 2rem;display:flex;flex-direction:column;gap:.7rem}
+.price-features li{font-size:.87rem;color:var(--muted);display:flex;gap:.6rem;align-items:flex-start;line-height:1.4}
+.price-features li::before{content:'✓';color:var(--accent);font-weight:600;flex-shrink:0;margin-top:.05rem}
+.price-features li.off{opacity:.38}
+.price-features li.off::before{content:'✗';color:var(--muted)}
+.price-btn{width:100%;padding:.82rem;border-radius:10px;font-size:.9rem;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all .2s}
+.price-btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-btn-outline:hover{border-color:rgba(0,212,255,.5)}
+.price-btn-fill{background:var(--accent);color:#000;border:none}
+.price-btn-fill:hover{opacity:.85;transform:translateY(-1px)}
+.payment-methods{display:flex;gap:1rem;align-items:center;justify-content:center;margin-top:2.5rem;flex-wrap:wrap}
+.pm-badge{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1.2rem;font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 2rem 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto}
+@media(max-width:700px){.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}}
+.footer-brand p{font-size:.85rem;color:var(--muted);margin-top:.8rem;line-height:1.6;max-width:220px}
+.footer-col h5{font-size:.78rem;font-weight:500;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.footer-col a{display:block;font-size:.84rem;color:var(--muted);margin-bottom:.6rem;transition:color .2s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{max-width:1100px;margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);flex-wrap:wrap;gap:.5rem}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:999;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:2.5rem;max-width:440px;width:100%;position:relative;max-height:90vh;overflow-y:auto}
+.modal-close{position:absolute;top:1rem;right:1.2rem;background:transparent;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;line-height:1;padding:.2rem}
+.modal h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.3rem}
+.modal>.modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero>div>*{animation:fadeUp .65s ease both}
+.hero-badge{animation-delay:.1s}
+.hero h1{animation-delay:.2s}
+.hero-sub{animation-delay:.3s}
+.hero-btns{animation-delay:.4s}
+.hero-stats{animation-delay:.55s}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Work<span>Hub</span></div>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#empleos">Empleos</a>
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#precios">Precios</a>
+  </div>
+  <div class="nav-cta">
+    <button class="btn-ghost" onclick="openModal('login')">Iniciar sesión</button>
+    <button class="btn-primary" onclick="openModal('register')">Registrarse gratis</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div>
+    <div class="hero-badge"><span class="dot"></span> Plataforma #1 en Latinoamérica</div>
+    <h1>Conecta talento con<br><span class="hl">oportunidades reales</span></h1>
+    <p class="hero-sub">Encuentra empleos, ofrece tus servicios y gestiona pagos seguros. Todo en un solo lugar, sin complicaciones.</p>
+    <div class="hero-btns">
+      <button class="btn-lg btn-lg-primary" onclick="document.getElementById('empleos').scrollIntoView({behavior:'smooth'})">Ver empleos disponibles</button>
+      <button class="btn-lg btn-lg-outline" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">Ofrecer mis servicios</button>
+    </div>
+    <div class="hero-stats">
+      <div style="text-align:center"><div class="stat-num">12K+</div><div class="stat-label">Profesionales activos</div></div>
+      <div style="text-align:center"><div class="stat-num">3.4K</div><div class="stat-label">Empleos publicados</div></div>
+      <div style="text-align:center"><div class="stat-num">$2.1M</div><div class="stat-label">Pagados a freelancers</div></div>
+      <div style="text-align:center"><div class="stat-num">98%</div><div class="stat-label">Satisfacción clientes</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="servicios">
+  <div class="container">
+    <p class="section-tag">Servicios disponibles</p>
+    <h2 class="section-title">¿Qué necesitas hoy?</h2>
+    <p class="section-sub">Profesionales verificados listos para ayudarte con tus proyectos.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">💻</div>
+        <h3>Desarrollo Web & Mobile</h3>
+        <p>Sitios web, apps iOS/Android, e-commerce y sistemas a medida con tecnologías modernas.</p>
+        <div class="service-price">Desde $15 / hora</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Diseño & Branding</h3>
+        <p>Identidad visual, UI/UX, ilustraciones y material gráfico para tu marca o negocio.</p>
+        <div class="service-price">Desde $20 / hora</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3>Marketing Digital</h3>
+        <p>SEO, campañas de ads, redes sociales y estrategias de crecimiento orgánico.</p>
+        <div class="service-price">Desde $25 / hora</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✍️</div>
+        <h3>Redacción & Contenido</h3>
+        <p>Copywriting, artículos, guiones y contenido para blogs, redes y email marketing.</p>
+        <div class="service-price">Desde $10 / hora</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Datos & Análisis</h3>
+        <p>Business intelligence, dashboards, modelos de ML y análisis de datos empresariales.</p>
+        <div class="service-price">Desde $30 / hora</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔒</div>
+        <h3>Ciberseguridad</h3>
+        <p>Auditorías de seguridad, pentesting y consultoría para proteger tus sistemas.</p>
+        <div class="service-price">Desde $45 / hora</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <button class="btn-lg btn-lg-outline" onclick="openModal('register')">Publicar mi servicio →</button>
+    </div>
+  </div>
+</section>
+
+<section id="empleos" class="jobs-section">
+  <div class="container">
+    <p class="section-tag">Bolsa de trabajo</p>
+    <h2 class="section-title">Empleos activos ahora</h2>
+    <p class="section-sub">Nuevas oportunidades publicadas cada día por empresas verificadas.</p>
+    <div class="jobs-filter">
+      <button class="filter-btn active" onclick="filterJobs(this,'todos')">Todos</button>
+      <button class="filter-btn" onclick="filterJobs(this,'remote')">Remoto</button>
+      <button class="filter-btn" onclick="filterJobs(this,'onsite')">Presencial</button>
+      <button class="filter-btn" onclick="filterJobs(this,'hybrid')">Híbrido</button>
+    </div>
+    <div class="jobs-grid" id="jobs-container"></div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <button class="btn-lg btn-lg-primary" onclick="openModal('register')">Ver todos los empleos →</button>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="container">
+    <p class="section-tag">Proceso simple</p>
+    <h2 class="section-title">¿Cómo funciona?</h2>
+    <p class="section-sub">En 4 pasos puedes estar trabajando o encontrar al profesional ideal.</p>
+    <div class="how-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Crea tu perfil</h3>
+        <p>Regístrate con Google o email. Completa tu perfil en menos de 5 minutos.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Publica o aplica</h3>
+        <p>Ofrece tus servicios o aplica a empleos que más se ajusten a tu perfil.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>Acuerda condiciones</h3>
+        <p>Chatea directamente y llega a un acuerdo justo antes de empezar.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <h3>Cobra seguro</h3>
+        <p>El pago queda en escrow hasta que apruebes el trabajo. Sin riesgos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="auth-section" id="registro">
+  <div class="container">
+    <div class="auth-grid">
+      <div>
+        <p class="section-tag">Únete gratis</p>
+        <h2 class="section-title">Empieza hoy mismo</h2>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.7;margin-top:1rem;max-width:420px">Más de 12,000 profesionales ya confían en WorkHub para encontrar trabajo y clientes. Tu próxima oportunidad está a un clic.</p>
+        <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1.2rem">
+          <div style="display:flex;gap:.9rem;align-items:flex-start">
+            <span style="color:var(--accent);font-size:1.1rem;margin-top:.1rem">✓</span>
+            <div><strong style="font-size:.92rem;display:block;margin-bottom:.2rem">Sin comisiones el primer mes</strong><span style="font-size:.82rem;color:var(--muted)">Cobra el 100% de tus ganancias durante 30 días.</span></div>
+          </div>
+          <div style="display:flex;gap:.9rem;align-items:flex-start">
+            <span style="color:var(--accent);font-size:1.1rem;margin-top:.1rem">✓</span>
+            <div><strong style="font-size:.92rem;display:block;margin-bottom:.2rem">Pagos protegidos con escrow</strong><span style="font-size:.82rem;color:var(--muted)">Tu dinero está seguro hasta que apruebes el trabajo.</span></div>
+          </div>
+          <div style="display:flex;gap:.9rem;align-items:flex-start">
+            <span style="color:var(--accent);font-size:1.1rem;margin-top:.1rem">✓</span>
+            <div><strong style="font-size:.92rem;display:block;margin-bottom:.2rem">Soporte en español 24/7</strong><span style="font-size:.82rem;color:var(--muted)">Equipo de soporte siempre disponible para ayudarte.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="auth-form">
+        <h3 id="form-title">Crear cuenta gratis</h3>
+        <p class="form-sub" id="form-sub">Sin tarjeta de crédito requerida</p>
+        <button class="btn-google">
+          <div class="google-icon">G</div>
+          Continuar con Google
+        </button>
+        <div class="divider">o con email</div>
+        <div class="form-group" id="name-group">
+          <label>Nombre completo</label>
+          <input type="text" placeholder="Tu nombre completo"/>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="tu@email.com"/>
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" placeholder="Mínimo 8 caracteres"/>
+        </div>
+        <button class="auth-submit" id="auth-btn">Crear cuenta gratis</button>
+        <div style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:1rem">
+          <a onclick="toggleForm()" style="color:var(--accent);cursor:pointer" id="toggle-link">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:.8rem;line-height:1.5">Al registrarte aceptas los <a href="#" style="color:var(--accent)">términos de uso</a> y la <a href="#" style="color:var(--accent)">política de privacidad</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="precios" class="pricing-section">
+  <div class="container">
+    <p class="section-tag">Planes y precios</p>
+    <h2 class="section-title">Elige tu plan</h2>
+    <p class="section-sub">Sin contratos. Sin sorpresas. Cancela cuando quieras.</p>
+    <div class="pricing-grid" style="margin-top:4rem">
+      <div class="price-card">
+        <div class="price-plan">Gratis</div>
+        <div class="price-amount">$0<span> / mes</span></div>
+        <ul class="price-features">
+          <li>5 aplicaciones por mes</li>
+          <li>Perfil público básico</li>
+          <li>Mensajería limitada (10/mes)</li>
+          <li>1 servicio publicado</li>
+          <li class="off">Comisión reducida</li>
+          <li class="off">Soporte prioritario</li>
+          <li class="off">Pagos instantáneos</li>
+        </ul>
+        <button class="price-btn price-btn-outline" onclick="openModal('register')">Empezar gratis</button>
+      </div>
+      <div class="price-card featured" style="position:relative">
+        <div class="popular-badge">Más popular</div>
+        <div class="price-plan">Pro</div>
+        <div class="price-amount">$19<span> / mes</span></div>
+        <ul class="price-features">
+          <li>Aplicaciones ilimitadas</li>
+          <li>Perfil destacado en búsquedas</li>
+          <li>Mensajería ilimitada</li>
+          <li>Hasta 10 servicios publicados</li>
+          <li>Comisión reducida al 5%</li>
+          <li>Soporte prioritario 24/7</li>
+          <li class="off">Pagos instantáneos</li>
+        </ul>
+        <button class="price-btn price-btn-fill" onclick="openModal('payment','Pro - $19/mes')">Suscribirse ahora</button>
+      </div>
+      <div class="price-card">
+        <div class="price-plan">Business</div>
+        <div class="price-amount">$49<span> / mes</span></div>
+        <ul class="price-features">
+          <li>Todo lo incluido en Pro</li>
+          <li>Sin comisiones (0%)</li>
+          <li>Pagos instantáneos</li>
+          <li>Equipo de hasta 5 personas</li>
+          <li>Servicios ilimitados</li>
+          <li>API access + webhooks</li>
+          <li>Manager de cuenta dedicado</li>
+        </ul>
+        <button class="price-btn price-btn-outline" onclick="openModal('payment','Business - $49/mes')">Elegir Business</button>
+      </div>
+    </div>
+    <div class="payment-methods">
+      <span style="font-size:.8rem;color:var(--muted)">Pagos seguros con:</span>
+      <div class="pm-badge">💳 Visa / MC</div>
+      <div class="pm-badge">📱 PayPal</div>
+      <div class="pm-badge">🏦 Transferencia</div>
+      <div class="pm-badge">₿ Cripto</div>
+      <div class="pm-badge">🔒 SSL 256-bit</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Work<span>Hub</span></div>
+      <p>La plataforma que conecta talento con oportunidades reales en toda Latinoamérica.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Plataforma</h5>
+      <a href="#">Encontrar trabajo</a>
+      <a href="#">Ofrecer servicios</a>
+      <a href="#">Para empresas</a>
+      <a href="#">Precios</a>
+    </div>
+    <div class="footer-col">
+      <h5>Soporte</h5>
+      <a href="#">Centro de ayuda</a>
+      <a href="#">Política de pagos</a>
+      <a href="#">Resolución disputas</a>
+      <a href="#">Contáctanos</a>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <a href="#">Términos de uso</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Cookies</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 WorkHub. Todos los derechos reservados.</span>
+    <span>Hecho con ♥ en Latinoamérica</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3 id="modal-title">Iniciar sesión</h3>
+    <p class="modal-sub" id="modal-sub">Bienvenido de vuelta</p>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const jobs=[
+  {company:'TechCo',logo:'TC',bg:'#1e3a5f',color:'#60a5fa',title:'Frontend Developer',company_name:'TechCo SA',location:'Buenos Aires',exp:'3 años',type:'remote',salary:'$2,500',period:'mes'},
+  {company:'Startup MX',logo:'SM',bg:'#2d1b4e',color:'#a78bfa',title:'Product Designer',company_name:'Startup MX',location:'Ciudad de México',exp:'2 años',type:'hybrid',salary:'$1,800',period:'mes'},
+  {company:'Fintech CO',logo:'FC',bg:'#0f3026',color:'#34d399',title:'Data Analyst',company_name:'Fintech CO',location:'Bogotá',exp:'4 años',type:'onsite',salary:'$3,200',period:'mes'},
+  {company:'Agency',logo:'AC',bg:'#3b1515',color:'#f87171',title:'Copywriter Senior',company_name:'Agency CL',location:'Santiago',exp:'2 años',type:'remote',salary:'$1,200',period:'mes'},
+  {company:'CloudBR',logo:'CB',bg:'#1a2e1a',color:'#86efac',title:'DevOps Engineer',company_name:'CloudBR',location:'São Paulo',exp:'5 años',type:'remote',salary:'$4,000',period:'mes'},
+  {company:'MediaPE',logo:'MP',bg:'#2a1f00',color:'#fcd34d',title:'Social Media Manager',company_name:'MediaPE',location:'Lima',exp:'1 año',type:'hybrid',salary:'$900',period:'mes'},
+  {company:'AppBO',logo:'AB',bg:'#001a3b',color:'#93c5fd',title:'Flutter Developer',company_name:'AppBO',location:'Cochabamba',exp:'2 años',type:'remote',salary:'$1,600',period:'mes'},
+  {company:'EduAR',logo:'EA',bg:'#1a0030',color:'#c4b5fd',title:'Instructional Designer',company_name:'EduAR',location:'Córdoba',exp:'3 años',type:'hybrid',salary:'$1,100',period:'mes'},
+];
+
+let currentFilter='todos';
+function renderJobs(){
+  const c=document.getElementById('jobs-container');
+  const filtered=currentFilter==='todos'?jobs:jobs.filter(j=>j.type===currentFilter);
+  const typeLabel={remote:'Remoto',onsite:'Presencial',hybrid:'Híbrido'};
+  c.innerHTML=filtered.map(j=>`
+    <div class="job-card" onclick="openModal('register')">
+      <div class="job-left">
+        <div class="job-logo" style="background:${j.bg};color:${j.color}">${j.logo}</div>
+        <div class="job-info">
+          <h4>${j.title}</h4>
+          <div class="job-meta">
+            <span>${j.company_name}</span><span>·</span>
+            <span>${j.location}</span><span>·</span>
+            <span>${j.exp} exp.</span>
+            <span class="job-tag ${j.type}">${typeLabel[j.type]}</span>
+          </div>
+        </div>
+      </div>
+      <div class="job-salary">$${j.salary}<span>/ ${j.period}</span></div>
+    </div>
+  `).join('');
+}
+function filterJobs(btn,type){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');currentFilter=type;renderJobs();
+}
+
+let isLoginForm=false;
+function toggleForm(){
+  isLoginForm=!isLoginForm;
+  document.getElementById('form-title').textContent=isLoginForm?'Bienvenido de vuelta':'Crear cuenta gratis';
+  document.getElementById('form-sub').textContent=isLoginForm?'Ingresa tus credenciales':'Sin tarjeta de crédito requerida';
+  document.getElementById('name-group').style.display=isLoginForm?'none':'block';
+  document.getElementById('auth-btn').textContent=isLoginForm?'Iniciar sesión':'Crear cuenta gratis';
+  document.getElementById('toggle-link').textContent=isLoginForm?'¿No tienes cuenta? Regístrate gratis':'¿Ya tienes cuenta? Inicia sesión';
+}
+
+function openModal(type, planName){
+  const m=document.getElementById('modal');
+  const title=document.getElementById('modal-title');
+  const sub=document.getElementById('modal-sub');
+  const body=document.getElementById('modal-body');
+  if(type==='login'){
+    title.textContent='Iniciar sesión';
+    sub.textContent='Bienvenido de vuelta';
+    body.innerHTML=`
+      <button class="btn-google"><div class="google-icon">G</div> Continuar con Google</button>
+      <div class="divider">o con email</div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com"/></div>
+      <div class="form-group"><label>Contraseña</label><input type="password" placeholder="••••••••"/></div>
+      <button class="auth-submit">Iniciar sesión</button>
+      <p style="font-size:.8rem;text-align:center;margin-top:1rem;color:var(--muted)">¿No tienes cuenta? <a onclick="openModal('register')" style="color:var(--accent);cursor:pointer">Regístrate gratis</a></p>`;
+  } else if(type==='register'){
+    title.textContent='Crear cuenta gratis';
+    sub.textContent='Sin tarjeta de crédito';
+    body.innerHTML=`
+      <button class="btn-google"><div class="google-icon">G</div> Continuar con Google</button>
+      <div class="divider">o con email</div>
+      <div class="form-group"><label>Nombre completo</label><input type="text" placeholder="Tu nombre"/></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com"/></div>
+      <div class="form-group"><label>Contraseña</label><input type="password" placeholder="Mínimo 8 caracteres"/></div>
+      <button class="auth-submit">Crear cuenta gratis</button>
+      <p style="font-size:.75rem;color:var(--muted);text-align:center;margin-top:.8rem">Al registrarte aceptas los <a href="#" style="color:var(--accent)">términos</a> y la <a href="#" style="color:var(--accent)">privacidad</a></p>`;
+  } else if(type==='payment'){
+    title.textContent='Suscripción segura';
+    sub.textContent=planName||'Elige tu método de pago';
+    body.innerHTML=`
+      <div style="display:grid;gap:.7rem;margin-bottom:1.2rem">
+        <label style="display:flex;align-items:center;gap:.8rem;padding:.9rem 1rem;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:.88rem;transition:border .2s">
+          <input type="radio" name="pm" checked style="accent-color:var(--accent)"/> 💳 Tarjeta de crédito / débito
+        </label>
+        <label style="display:flex;align-items:center;gap:.8rem;padding:.9rem 1rem;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:.88rem">
+          <input type="radio" name="pm" style="accent-color:var(--accent)"/> 📱 PayPal
+        </label>
+        <label style="display:flex;align-items:center;gap:.8rem;padding:.9rem 1rem;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:.88rem">
+          <input type="radio" name="pm" style="accent-color:var(--accent)"/> 🏦 Transferencia bancaria
+        </label>
+      </div>
+      <div class="form-group"><label>Número de tarjeta</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19"/></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div class="form-group"><label>Vencimiento</label><input type="text" placeholder="MM/AA" maxlength="5"/></div>
+        <div class="form-group"><label>CVV</label><input type="text" placeholder="123" maxlength="4"/></div>
+      </div>
+      <div class="form-group"><label>Nombre en la tarjeta</label><input type="text" placeholder="Como aparece en la tarjeta"/></div>
+      <button class="auth-submit">🔒 Pagar de forma segura</button>
+      <p style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:.8rem;line-height:1.5">Cifrado SSL 256-bit · No guardamos datos de tarjeta · Cancela cuando quieras</p>`;
+  }
+  m.classList.add('open');
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+
+renderJobs();
+</script>
+</body>
+</html>
